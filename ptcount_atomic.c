@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #define NUM_THREADS  3
+#define ONE 1
 
 typedef struct thread_args {
   int tid;
@@ -32,13 +33,18 @@ void *inc_count(void *arg)
      * existence and the need for Critical section protection?
      */
 
-    //count = count + my_args->inc;
       /*
        * Count created the difference in value count
        * Reimplimented as atomic add
-       * Source: lecture slides
+       *
+       * __atomic_add_fetch(type* ptr, type val, int memorder)
+       * &count             - memory size determinded by compiler
+       * ONE                - value of 1 added to current value
+       * __ATOMIC_RELAXED   - specified in lab
+       *
+       * Source: lecture slides - 23
        */
-    __atomic_add_fetch(&count, 1, __ATOMIC_RELAXED);
+    __atomic_add_fetch(&count, ONE, __ATOMIC_RELAXED);
       loc = loc + my_args->inc;
   }
   printf("Thread: %d finished. Counted: %d\n", my_args->tid, loc);
@@ -90,6 +96,7 @@ int main(int argc, char *argv[])
        * attr       - pointer to attribute object
        * inc_count  - pointer to the starting routine
        * targs      - pointer to arguments passed to the start routine
+       *  Source: Lecture Slides - 12.
        *
        */
       pthread_create(&threads[i], &attr, inc_count, (void*) targs);
@@ -99,13 +106,12 @@ int main(int argc, char *argv[])
    * do not return anything on exit, so the second argument is NULL
    */
   for (i = 0; i < NUM_THREADS; i++) {
-    /* Make call to pthread_join here */
-      /*
-       *
-     * int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+    /* Make call to pthread_join here
+     * int pthread_join(pthread_t thread, void **value_ptr);
      * threads    - addressing point to thread object
      * NULL       -  pointer to data returned on exit
      *
+     * Source: Lecture Slides - 14.
      */
       pthread_join(threads[i], NULL);
   }

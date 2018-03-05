@@ -34,6 +34,7 @@ void *inc_count(void *arg)
 
       /*
        * pthread_mutex_(un)lock(); implemented to create mutual exclusion over this critical section of increments.
+       * source: Lecture Slides - 21.
        */
    pthread_mutex_lock(&count_mutex);
     count = count + my_args->inc;
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
    * attr       - pointer to attribute object
    * inc_count  - pointer to the starting routine
    * targs      - pointer to arguments passed to the start routine
-   *
+   * Source: Lecture Slides - 12.
    */
       pthread_create(&threads[i], &attr, inc_count, (void*) targs);
   }
@@ -99,13 +100,11 @@ int main(int argc, char *argv[])
    * do not return anything on exit, so the second argument is NULL
    */
   for (i = 0; i < NUM_THREADS; i++) {
-    /* Make call to pthread_join here */
-      /*
-     *
-   * int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+    /* Make call to pthread_join here
+   * int pthread_join(pthread_t thread, void **value_ptr);
    * threads    - addressing point to thread object
    * NULL       -  pointer to data returned on exit
-   *
+   * Source: Lecture Slides - 14.
    */
       pthread_join(threads[i], NULL);
   }
