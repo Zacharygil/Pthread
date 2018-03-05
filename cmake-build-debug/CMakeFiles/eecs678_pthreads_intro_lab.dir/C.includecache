@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Zacula/Desktop/eecs678-pthreads_intro-lab/ptcount_atomic.c
+pthread.h
+-
+stdio.h
+-
+stdlib.h
+-
+
+/Users/Zacula/Desktop/eecs678-pthreads_intro-lab/ptcount_mutex.c
+pthread.h
+-
+stdio.h
+-
+stdlib.h
+-
+

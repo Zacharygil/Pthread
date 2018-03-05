@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/eecs678_pthreads_intro_lab.dir/ptcount_atomic.c.o CMakeFiles/eecs678_pthreads_intro_lab.dir/ptcount_mutex.c.o  -o eecs678_pthreads_intro_lab 

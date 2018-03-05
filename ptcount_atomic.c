@@ -31,8 +31,10 @@ void *inc_count(void *arg)
      * does their repsective locations have for critical section
      * existence and the need for Critical section protection?
      */
-    count = count + my_args->inc;
-    loc = loc + my_args->inc;
+
+    //count = count + my_args->inc;
+    __atomic_add_fetch(&count, 1, __ATOMIC_RELAXED);
+      loc = loc + my_args->inc;
   }
   printf("Thread: %d finished. Counted: %d\n", my_args->tid, loc);
   free(my_args);
