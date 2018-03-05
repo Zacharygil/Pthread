@@ -33,6 +33,11 @@ void *inc_count(void *arg)
      */
 
     //count = count + my_args->inc;
+      /*
+       * Count created the difference in value count
+       * Reimplimented as atomic add
+       * Source: lecture slides
+       */
     __atomic_add_fetch(&count, 1, __ATOMIC_RELAXED);
       loc = loc + my_args->inc;
   }
@@ -79,6 +84,14 @@ int main(int argc, char *argv[])
     targs->loop = loop;
     targs->inc = inc;
     /* Make call to pthread_create here */
+      /*
+       * int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+       * threads    - addressing point to thread object
+       * attr       - pointer to attribute object
+       * inc_count  - pointer to the starting routine
+       * targs      - pointer to arguments passed to the start routine
+       *
+       */
       pthread_create(&threads[i], &attr, inc_count, (void*) targs);
   }
 
@@ -87,6 +100,13 @@ int main(int argc, char *argv[])
    */
   for (i = 0; i < NUM_THREADS; i++) {
     /* Make call to pthread_join here */
+      /*
+       *
+     * int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void*), void *arg);
+     * threads    - addressing point to thread object
+     * NULL       -  pointer to data returned on exit
+     *
+     */
       pthread_join(threads[i], NULL);
   }
 
